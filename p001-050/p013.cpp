@@ -2,7 +2,7 @@
 using namespace std;
 
 #define N 50
-#define ELEM 4
+
 void printVector(const vector<int>& vec);
 
 int main(){
