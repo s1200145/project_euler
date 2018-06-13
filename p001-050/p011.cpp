@@ -6,77 +6,78 @@ using namespace std;
 void printDeque(const deque<int>& deq);
 
 int main(){
-   string filename = "p011.txt";
-   int arr[N][N];
-   int i, j;
-   ulong multi;
-   ulong max = 0;
-   ifstream readFile;
-   string readLineBuffer;
-   deque<ulong> q;
+  string filename = "p011.txt";
+  int arr[N][N];
+  int i, j;
+  ifstream readFile;
+  string readLineBuffer;
+  deque<ulong> q;
 
-   readFile.open(filename, ios::in);
+  int multi;
+  int max = 0;
+  readFile.open(filename, ios::in);
 
-   i = 0;
-   j = 0;
-   while(getline(readFile, readLineBuffer, ' ')){
-      int tmp = atoi(readLineBuffer.c_str());
-      arr[i][j] = tmp;
-      if(j < N-1){
-         j++;
-      }else{
-         j = 0;
-         i++;
+  i = 0;
+  j = 0;
+  while(getline(readFile, readLineBuffer, ' ')){
+    int tmp = atoi(readLineBuffer.c_str());
+    arr[i][j] = tmp;
+    if(j < N-1){
+      j++;
+    }else{
+      j = 0;
+      i++;
+    }
+  }
+  for(int i = 0; i < N; i++){
+    for(int j = 0; j < N; j++){
+      cout << arr[i][j] << " ";
+    }
+    cout << endl;
+  }
+  // horizontal
+  for(int i = 0; i < N; i++){
+    for(int j = 0; j < N-3; j++){
+      multi = arr[i][j] * arr[i][j+1] * arr[i][j+2] * arr[i][j+3];
+      if(multi > max){
+        max = multi;
       }
-   }
-
-   for(i = 0; i < N; i++){
-      for(j = 0; j < N; j++){
-         cout << arr[i][j] << ' ';
+    }
+  }
+  // vertical
+  for(int j = 0; j < N; j++){
+    for(int i = 0; i < N-3; i++){
+      multi = arr[i][j] * arr[i+1][j] * arr[i+2][j] * arr[i+3][j];
+      if(multi > max){
+        max = multi;
       }
-      cout << endl;
-   }
-
-   // diagonal
-   for(i = N-ELEM; i < N-ELEM; i++){
-      for(j = N-ELEM;j
-      // if(q.size() < ELEM){
-      //    q.push_back(arr[i][i]);
-      // }
-      // if(q.size() == ELEM){
-      //    multi = 1;
-      //    for(size_t i = 0; i < N; i++){
-      //       multi *= q[i];
-      //    }
-      //    if(max < multi){
-      //       max = multi;
-      //    }
-      //    q.pop_front();
-      // }
-   }
-   q.clear();
-   // for(i = N - 1; i >= ELEM; i--){
-   //    if(q.size() < ELEM){
-   //       q.push_back(arr[i][i]);
-   //    }
-   //    if(q.size() == ELEM){
-   //       multi = 1;
-   //       for(size_t i = 0; i < N; i++){
-   //          multi *= q[i];
-   //       }
-   //       if(max < multi){
-   //          max = multi;
-   //       }
-   //       q.pop_front();
-   //    }
-   // }
-   q.clear();
+    }
+  }
+  // Lower right diagonal
+  for(int i = 0; i < N-3; i++){
+    for(int j = 0; j < N-3; j++){
+      multi = arr[i][j] * arr[i+1][j+1] * arr[i+2][j+2] * arr[i+3][j+3];
+      if(multi > max){
+        max = multi;
+      }
+    }
+  }
+  // Lower left diagonal
+  for(int i = 0; i < N-3; i++){
+    for(int j = 3; j < N; j++){
+      multi = arr[i][j] * arr[i+1][j-1] * arr[i+2][j-2] * arr[i+3][j-3];
+      if(multi > max){
+        max = multi;
+      }
+    }
+  }
+  cout << max << endl;
 }
 
 void printDeque(const deque<int>& deq){
-   const deque<int>::const_iterator itEnd = deq.end();
-   for(deque<int>::const_iterator it = deq.begin(); it != itEnd; ++it){
-      cout << *it << ' ';
-   }
-   cout << endl;
+  const deque<int>::const_iterator itEnd = deq.end();
+  for(deque<int>::const_iterator it = deq.begin(); it != itEnd; ++it){
+    cout << *it << ' ';
+  }
+  cout << endl;
 }
